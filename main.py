@@ -1,9 +1,8 @@
 import argparse
-import nltk
+import spacy
 
 def main(message: str):
-    tokenized_message = nltk.word_tokenize(message)
-    print(tokenized_message)
+    nlp = spacy.load("en_core_web_sm")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
