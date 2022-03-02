@@ -2,10 +2,8 @@ FROM python:3.9
 
 WORKDIR /api
 
-COPY ./requirements.txt /api/requirements.txt
+COPY . /api
 
 RUN pip install --no-cache-dir --upgrade -r /api/requirements.txt
 
-COPY ./app /api/app
-
-CMD ["python3", "app/main.py"]
+CMD ["python3", "main.py"]
