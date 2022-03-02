@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: reddit-sentiment
+build:
+  artifacts:
+  - image: sentiment-api
+    context: api
+    docker:
+      dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+    - api/deployment/deployment.yaml
+portForward:
+  - resourceType: deployment
+    resourceName: sentiment-api
+    port: http
+    localPort: 8000
