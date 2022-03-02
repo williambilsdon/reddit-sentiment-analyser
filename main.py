@@ -1,7 +1,8 @@
 import argparse
-import spacy
+import csv
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
-def main(message: str):
+def main(messages: str):
     nlp = spacy.load("en_core_web_sm")
     doc = nlp(message)
     filtered_list = [word.text for word in doc if word.is_stop is False]
