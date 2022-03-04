@@ -4,11 +4,11 @@ metadata:
   name: reddit-sentiment
 build:
   artifacts:
-  - image: sentiment-api
+  - image: sentiment-analyser
     context: api
     docker:
       dockerfile: Dockerfile
-  - image: sentiment-app
+  - image: sentiment-ui
     context: sentiment-ui
     docker:
       dockerfile: Dockerfile

@@ -6,54 +6,53 @@ metadata:
     app:
       sentiment-api
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - port: 8000
-      nodePort: 30000
-      name: sentiment-api
+      targetPort: 8000
   selector:
-    app: sentiment-api
+    app: sentiment-analyser
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: sentiment-api
-  name: sentiment-api
+    app: sentiment-analyser
+  name: sentiment-analyser
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sentiment-api
+      app: sentiment-analyser
   template:
     metadata:
       labels:
-        app: sentiment-api
+        app: sentiment-analyser
     spec:
       containers:
-      - image: sentiment-api
-        name: sentiment-api
+      - image: sentiment-analyser
+        name: sentiment-analyser
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: sentiment-app
-  name: sentiment-app
+    app: sentiment-ui
+  name: sentiment-ui
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sentiment-app
+      app: sentiment-ui
   template:
     metadata:
       labels:
-        app: sentiment-app
+        app: sentiment-ui
     spec:
       containers:
-      - image: sentiment-app
-        name: sentiment-app
+      - image: sentiment-ui
+        name: sentiment-ui
 ---
 apiVersion: v1
 kind: Service
@@ -63,10 +62,33 @@ metadata:
     app:
       sentiment-app
 spec:
-  type: NodePort
   ports:
     - port: 3000
-      nodePort: 30001
-      name: sentiment-app
+      targetPort: 3000
   selector:
-    app: sentiment-app
+    app: sentiment-ui
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress  
+  annotations:
+    kubernetes.io/ingress.class: "nginx"  
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /comments/
+          pathType: Prefix
+          backend:
+            service:
+              name: sentiment-api
+              port:
+                number: 8000
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: sentiment-app
+              port:
+                number: 3000 

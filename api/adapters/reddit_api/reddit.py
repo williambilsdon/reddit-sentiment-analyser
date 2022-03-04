@@ -3,22 +3,6 @@ import asyncpraw
 import json
 from typing import List
 
-"""
-reddit = praw.Reddit(
-    user_agent="Comment Extraction (by u/Wilsdon)",
-    client_id="ZBOJsnxnu7IR0SiN8Z2T3g",
-    client_secret="r8gFYgGI4IQ8RRHPfatqPuTWVdvUxQ",
-)
-
-print("Getting new post submission")
-
-submission = reddit.submission(id="t1yw5a")
-
-print("Extend list")
-
-submission.comments.replace_more(limit=None)
-"""
-
 class Reddit:
     def __init__(self, client_id: str, client_secret: str, user_agent: str) -> List[str]:
         self.client = asyncpraw.Reddit(
