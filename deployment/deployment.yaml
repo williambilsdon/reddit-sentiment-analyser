@@ -6,9 +6,10 @@ metadata:
     app:
       sentiment-api
 spec:
-  clusterIP: None
+  type: NodePort
   ports:
     - port: 8000
+      nodePort: 30000
       name: sentiment-api
   selector:
     app: sentiment-api
@@ -33,6 +34,3 @@ spec:
       containers:
       - image: sentiment-api
         name: sentiment-api
-        ports:
-        - containerPort: 8000
-          name: http

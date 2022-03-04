@@ -11,9 +11,5 @@ build:
 deploy:
   kubectl:
     manifests:
-    - api/deployment/deployment.yaml
-portForward:
-  - resourceType: deployment
-    resourceName: sentiment-api
-    port: http
-    localPort: 8000
+    - deployment/deployment.yaml
+
