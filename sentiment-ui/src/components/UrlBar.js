@@ -5,7 +5,7 @@ class UrlBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: '',
+            urlInput: '',
             sentiment: ''    
         };
     
@@ -14,11 +14,11 @@ class UrlBar extends Component {
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        this.setState({urlInput: event.target.value});
     }
     
     handleSubmit(event) {
-        let splitURL = this.state.value.split('/')
+        let splitURL = this.state.urlInput.split('/')
         console.log(splitURL[6])
 
         let getURL = `/comments/${splitURL[6]}`
@@ -28,10 +28,10 @@ class UrlBar extends Component {
         axios.get(getURL)
             .then(res => {
                 console.log(res)
-                this.setState({sentiment: res.Body})
+                this.props.updateSentiment(res.data)
             })
-            .catch(() => {
-                alert("Failed to send get request")
+            .catch((e) => {
+                alert(`Failed to send get request\n${e}`)
             })
 
         event.preventDefault();
@@ -44,7 +44,7 @@ class UrlBar extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         URL:
-                        <input type="text" value={this.state.value} onChange={this.handleChange} />
+                        <input type="text" value={this.state.urlInput} onChange={this.handleChange} />
                     </label>
                     <input type="submit" value="Analyse" />
                 </form>
