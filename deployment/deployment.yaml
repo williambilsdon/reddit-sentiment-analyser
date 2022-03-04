@@ -34,3 +34,39 @@ spec:
       containers:
       - image: sentiment-api
         name: sentiment-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sentiment-app
+  name: sentiment-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentiment-app
+  template:
+    metadata:
+      labels:
+        app: sentiment-app
+    spec:
+      containers:
+      - image: sentiment-app
+        name: sentiment-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentiment-app
+  labels:
+    app:
+      sentiment-app
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      nodePort: 30001
+      name: sentiment-app
+  selector:
+    app: sentiment-app

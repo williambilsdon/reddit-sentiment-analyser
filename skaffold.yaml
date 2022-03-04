@@ -8,6 +8,10 @@ build:
     context: api
     docker:
       dockerfile: Dockerfile
+  - image: sentiment-app
+    context: sentiment-ui
+    docker:
+      dockerfile: Dockerfile
 deploy:
   kubectl:
     manifests:
