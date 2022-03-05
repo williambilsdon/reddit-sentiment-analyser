@@ -1,4 +1,5 @@
 import uvicorn
+import os
 from adapters.Sentiment_analysis.vader import SentimentAnalyser
 from adapters.reddit_api.reddit import Reddit
 
@@ -26,7 +27,7 @@ async def root():
 async def get_comments(post_url):
     print("Entered Endpoint")
 
-    reddit_client = Reddit(client_id="ZBOJsnxnu7IR0SiN8Z2T3g", client_secret="r8gFYgGI4IQ8RRHPfatqPuTWVdvUxQ", user_agent="wilsdon")
+    reddit_client = Reddit(client_id=os.getenv('CLIENT_KEY'), client_secret=os.getenv('CLIENT_SECRET'), user_agent="wilsdon")
     print("created reddit client")
 
     comments = await reddit_client.GetComments(post_url)
