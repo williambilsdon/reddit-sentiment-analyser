@@ -1,0 +1,14 @@
+.progress-bar {
+    margin: auto;
+    position: relative;
+    height: 20px;
+    width: 350px;
+    border: 1px solid #333;
+    background: linear-gradient(to right, #FF4933, #CCCCCC, #33FF77);
+}
+
+.filler {
+    height: 100%;
+    border-left: 6px solid black;
+    transition: margin-left 2s ease-in-out;
+}
