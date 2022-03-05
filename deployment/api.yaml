@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentiment-api
+  labels:
+    app:
+      sentiment-api
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: 8000
+  selector:
+    app: sentiment-analyser
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: sentiment-analyser
+  name: sentiment-analyser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentiment-analyser
+  template:
+    metadata:
+      labels:
+        app: sentiment-analyser
+    spec:
+      containers:
+      - image: sentiment-analyser
+        name: sentiment-analyser
+        env:
+          - name: CLIENT_KEY
+            valueFrom:
+              secretKeyRef:
+                name: reddit-client-secrets
+                key: username
+          - name: CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: reddit-client-secrets
+                key: password
+

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sentiment-ui
+  name: sentiment-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sentiment-ui
+  template:
+    metadata:
+      labels:
+        app: sentiment-ui
+    spec:
+      containers:
+      - image: sentiment-ui
+        name: sentiment-ui
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentiment-app
+  labels:
+    app:
+      sentiment-app
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: sentiment-ui
