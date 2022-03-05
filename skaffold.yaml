@@ -17,5 +17,7 @@ deploy:
     paths: ["deployment"]
   kubectl:
     manifests:
-    - deployment/deployment.yaml
+    - deployment/api.yaml
+    - deployment/ingress.yaml
+    - deployment/app.yaml
 
