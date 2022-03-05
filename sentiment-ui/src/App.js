@@ -1,9 +1,10 @@
 import './App.css';
 import React, { Component } from 'react';
 import UrlBar from './components/UrlBar';
+import SentimentBar from './components/SentimentBar';
 
 class App extends  Component {
-  state = {sentiment: ''}
+  state = {sentiment: 0}
 
   updateSentiment = (sentiment) => {
     this.setState({sentiment: sentiment})
@@ -14,7 +15,7 @@ class App extends  Component {
       <div className="App">
         <h1>Reddit Football Sentiment Analyser</h1>
         <UrlBar updateSentiment={this.updateSentiment}/>
-        <p>{this.state.sentiment}</p>
+        <SentimentBar sentimentPercent={this.state.sentiment}/>
       </div>
     );
   }

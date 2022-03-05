@@ -27,8 +27,12 @@ class UrlBar extends Component {
 
         axios.get(getURL)
             .then(res => {
-                console.log(res)
-                this.props.updateSentiment(res.data)
+                let sentimentPercent = ((res.data+1)/2) * 100
+                console.log(res.data)
+                console.log(sentimentPercent)
+                sentimentPercent = Math.round(sentimentPercent)
+                console.log(sentimentPercent)
+                this.props.updateSentiment(sentimentPercent)
             })
             .catch((e) => {
                 alert(`Failed to send get request\n${e}`)
