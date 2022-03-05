@@ -13,7 +13,7 @@ class App extends  Component {
   render() {
     return (
       <div className="App">
-        <h1>Reddit Football Sentiment Analyser</h1>
+        <h1>Reddit Comment Sentiment Analyser</h1>
         <UrlBar updateSentiment={this.updateSentiment}/>
         <SentimentBar sentimentPercent={this.state.sentiment}/>
       </div>

@@ -1,5 +1,5 @@
 # message-positivity
-A small NLP project to determine the positivity of messages
+A small NLP project to determine the positivity of reddit threads
 
 In order for this to run you must set your reddit api client key and secret envrionment variables. This can be done by creating a kustomize file called `kustomization.yaml` inside the `deployment` folder:
 ```
