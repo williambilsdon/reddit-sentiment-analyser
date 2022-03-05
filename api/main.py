@@ -33,7 +33,12 @@ async def get_comments(post_url):
     print("Collected comments now need to generate their sentiment")
 
     analyser = SentimentAnalyser(comments)
-    return analyser.Analyse()
+
+    result = analyser.Analyse()
+    #Converting -1 to 1 range into a percentage
+    sentimentPercentage = ((result+1)/2) * 100
+
+    return sentimentPercentage
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
