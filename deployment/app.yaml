@@ -15,7 +15,7 @@ spec:
         app: sentiment-ui
     spec:
       containers:
-      - image: sentiment-ui
+      - image: gcr.io/reddit-sentiment-343307/reddit-sentiment-app:latest
         name: sentiment-ui
 ---
 apiVersion: v1

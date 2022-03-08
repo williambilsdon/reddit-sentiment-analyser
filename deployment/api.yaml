@@ -31,7 +31,7 @@ spec:
         app: sentiment-analyser
     spec:
       containers:
-      - image: sentiment-analyser
+      - image: gcr.io/reddit-sentiment-343307/reddit-sentiment-app:latest
         name: sentiment-analyser
         env:
           - name: CLIENT_KEY
