@@ -1,0 +1,11 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/reddit-sentiment-343307/reddit-sentiment-app', '-f', 'sentiment-ui/Dockerfile']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/reddit-sentiment-343307/reddit-sentiment-api', '-f', 'api/Dockerfile']
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - --filename=kubernetes-resource-file
+  - --location=europe-west1
+  - --cluster=reddit-sentiment-1
