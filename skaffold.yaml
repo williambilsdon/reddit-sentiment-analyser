@@ -3,6 +3,8 @@ kind: Config
 metadata:
   name: reddit-sentiment
 build:
+  local:
+    push: false
   artifacts:
   - image: sentiment-analyser
     context: api
@@ -13,11 +15,7 @@ build:
     docker:
       dockerfile: Dockerfile
 deploy:
-  kustomize:
-    paths: ["deployment"]
   kubectl:
     manifests:
-    - deployment/api.yaml
-    - deployment/ingress.yaml
-    - deployment/app.yaml
+    - deployment/*.yaml
 
