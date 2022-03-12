@@ -3,7 +3,7 @@ import os
 from adapters.Sentiment_analysis.vader import SentimentAnalyser
 from adapters.reddit_api.reddit import Reddit
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -20,24 +20,34 @@ app.add_middleware(
 )
 
 @app.get("/")
-async def root():
-    return {"message": "Hellow World"}
+def root():
+    return {"message": "Hello World"}
 
 @app.get("/comments/{post_url}", response_model=float)
-async def get_comments(post_url):
+def get_comments(post_url):
     print("Entered Endpoint")
 
-    reddit_client = Reddit(client_id=os.getenv('CLIENT_KEY'), client_secret=os.getenv('CLIENT_SECRET'), user_agent="wilsdon")
+    reddit_client = Reddit(client_id=os.getenv('CLIENT_KEY'), client_secret=os.getenv('CLIENT_SECRET'), user_agent="wilsdon", post_url=post_url)
     print("created reddit client")
 
-    comments = await reddit_client.GetComments(post_url)
+    comments, err = reddit_client.GetComments()
+    if err != None:
+        raise HTTPException(
+            status_code=err, detail=f'Failed to genereate comments list for url: {post_url}'
+        ) 
     print("Collected comments now need to generate their sentiment")
 
-    analyser = SentimentAnalyser(comments)
+    try:
+        analyser = SentimentAnalyser(comments)
 
-    result = analyser.Analyse()
-    #Converting -1 to 1 range into a percentage
-    sentimentPercentage = ((result+1)/2) * 100
+        result = analyser.Analyse()
+        #Converting -1 to 1 range into a percentage
+        sentimentPercentage = ((result+1)/2) * 100
+    except:
+        raise HTTPException(
+            status_code=500, detail=f'Unexpected error encountered when processing sentiment'
+        ) 
+
 
     return sentimentPercentage
 
