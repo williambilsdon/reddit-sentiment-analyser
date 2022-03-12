@@ -12,7 +12,7 @@ def test_get_comments():
 
 def test_get_comments_bad_id():
     response = client.get("/comments/12345abc")
-    assert response.status_code == 400
+    assert response.status_code == 500
 
 def test_get_comments_no_comments():
     #This is an old post I found on the /r/programming subreddit that shouldn't get any comment traction

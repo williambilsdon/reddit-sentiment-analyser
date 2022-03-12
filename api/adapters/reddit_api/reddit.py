@@ -8,17 +8,18 @@ class Reddit:
             client_id=client_id,
             client_secret=client_secret,
             user_agent=f'Comment Extraction (by u/{user_agent}',
-            post_url=post_url,
         )
+
+        self.post_url=post_url
 
     def GetComments(self) -> Tuple[List[str], int]:
         try:
             submission = self.getPost()
         except:
             return None, 400
+
         try:
-            comments = self.getComments(submission)  
-            all_comments = comments.list()
+            all_comments = self.getComments(submission) 
         except:
             return None, 500
 
@@ -29,7 +30,7 @@ class Reddit:
         return submission
 
     def getComments(self, submission):
-        comments = submission.comments()
-        comments.replace_more(limit=None)
-        return comments
+        submission.comments.replace_more(limit=None)
+        all_comments = submission.comments.list()
+        return all_comments
         
